@@ -3,56 +3,54 @@
     <div id="login-box" class="container">
       <div class="form-container sign-up-container">
         <el-form
-            ref="registerForm"
-            :model="registerForm"
-            :rules="register_rules"
+          ref="registerForm"
+          :model="registerForm"
+          :rules="register_rules"
         >
           <h1 style="padding-bottom: 20px">Register</h1>
           <el-form-item prop="username_register">
             <el-input
-                v-model="registerForm.username"
-                auto-complete="false"
-                placeholder="Please enter account name"
-                type="text"
+              v-model="registerForm.username"
+              auto-complete="false"
+              placeholder="Please enter username"
+              type="text"
             ></el-input>
           </el-form-item>
           <el-form-item prop="password_register">
             <el-input
-                v-model="registerForm.password"
-                auto-complete="false"
-                placeholder="Please enter password"
-                type="password"
+              v-model="registerForm.password"
+              auto-complete="false"
+              placeholder="Please enter password"
+              type="password"
             ></el-input>
           </el-form-item>
           <el-form-item prop="pasagain_register">
             <el-input
-                v-model="registerForm.passwordAg"
-                autocomplete="off"
-                placeholder="Confirm password again"
-                type="password"
+              v-model="registerForm.passwordAg"
+              autocomplete="off"
+              placeholder="Confirm password"
+              type="password"
             ></el-input>
           </el-form-item>
           <el-form-item prop="email">
             <el-input
-                v-model="registerForm.email"
-                autocomplete="off"
-                placeholder="Enter registration email"
-                type="text"
+              v-model="registerForm.email"
+              autocomplete="off"
+              placeholder="Enter registration email"
+              type="text"
             ></el-input>
           </el-form-item>
           <div style="display: flex;align-items: center">
             <el-form-item prop="emaile_code" style="width: 65%">
               <el-input
-                  v-model="registerForm.emailCode"
-                  autocomplete="off"
-                  placeholder="Enter verification code"
-                  type="text"
+                v-model="registerForm.emailCode"
+                autocomplete="off"
+                placeholder="Enter verification code"
+                type="text"
               ></el-input>
             </el-form-item>
-            <el-button style="width: 35%" type="primary" @click="sendEmail"
-            >Send Verification Code
-            </el-button
-            >
+            <el-button type="primary" @click="sendEmail">
+              Send Code</el-button>
           </div>
           <el-button type="primary" @click="submitRegister">Register</el-button>
         </el-form>
@@ -62,47 +60,49 @@
           <h1 style="padding-bottom: 20px">Login</h1>
           <el-form-item prop="username">
             <el-input
-                v-model="loginForm.username"
-                auto-complete="false"
-                placeholder="Please enter account name"
-                type="text"
+              v-model="loginForm.username"
+              auto-complete="false"
+              placeholder="Please enter username"
+              type="text"
             >
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input
-                v-model="loginForm.password"
-                auto-complete="false"
-                placeholder="Please enter password"
-                type="password"
+              v-model="loginForm.password"
+              auto-complete="false"
+              placeholder="Please enter password"
+              type="password"
             >
             </el-input>
           </el-form-item>
           <el-form-item
-              prop="code"
-              style="width: 100%;margin-right: 5px;display: flex;align-items: center"
+            prop="code"
+            style="width: 100%;margin-right: 5px;display: flex;align-items: center"
           >
             <div style="display: flex;align-items: center">
               <el-input
-                  v-model="loginForm.code"
-                  auto-complete="false"
-                  placeholder="Click image to change captcha"
-                  style="width: 183px;padding-right: 5px"
-                  type="text"
+                v-model="loginForm.code"
+                auto-complete="false"
+                placeholder="Click image to change verification code"
+                style="width: 183px;padding-right: 5px"
+                type="text"
               >
               </el-input>
-              <img :src="captchaUrl" @click="updateCaptcha"/>
+              <img :src="captchaUrl" @click="updateCaptcha" />
             </div>
           </el-form-item>
           <div style="width: 100%;text-align: left;">
             <el-checkbox
-                v-model="checked"
-                style="text-align: left;padding-bottom: 10px;width: 50px"
+              v-model="checked"
+              style="text-align: left;padding-bottom: 10px;width: 50px"
             >Remember me
-            </el-checkbox>
+            </el-checkbox
+            >
 
             <a href="#" style="text-align: right; padding-left: 65px">
-              Forgot password?</a>
+              Forgot password?</a
+            >
           </div>
           <el-button type="primary" @click="submitLogin">Login</el-button>
         </el-form>
@@ -111,11 +111,11 @@
         <div class="overlay">
           <div class="overlay-panel overlay-left">
             <h1>Already have an account?</h1>
-            <p>Please login with your account</p>
+            <p>Please log in with your account</p>
             <button id="signIn" class="ghost">Login</button>
           </div>
           <div class="overlay-panel overlay-right">
-            <h1>Don't have an account?</h1>
+            <h1>No account?</h1>
             <p>Register now to join us and start the journey with us</p>
             <button id="signUp" class="ghost">Register</button>
           </div>
@@ -125,9 +125,10 @@
   </div>
 </template>
 
+
 <script>
-import {Message} from "element-ui";
-import {post} from "@/request/http";
+import { Message } from "element-ui";
+import { post } from "@/request/http";
 
 export default {
   name: "login",
@@ -142,10 +143,10 @@ export default {
       checked: false,
       login_rules: {
         username: [
-          {required: true, message: "Please enter username", trigger: "blur"}
+          { required: true, message: "请输入用户名", trigger: "blur" }
         ],
-        password: [{required: true, message: "Please enter password", trigger: "blur"}],
-        code: [{required: true, message: "Please enter captcha", trigger: "blur"}]
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        code: [{ required: true, message: "请输入验证码", trigger: "blur" }]
       },
       registerForm: {
         username: "",
@@ -154,10 +155,10 @@ export default {
         emailCode: ""
       },
       register_rules: {
-        username: [{required: true, message: "Please enter username"}],
-        password: [{required: true, message: "Please enter password"}],
-        email: [{required: true, message: "Please enter email"}],
-        emailCode: [{required: true, message: "Please enter verification code"}]
+        username: [{ required: true, message: "请输入用户名" }],
+        password: [{ required: true, message: "请输入密码" }],
+        email: [{ required: true, message: "请输入邮箱" }],
+        emailCode: [{ required: true, message: "请输入验证码" }]
       }
     };
   },
@@ -166,7 +167,7 @@ export default {
       this.captchaUrl = "/api/captcha?time=" + new Date();
     },
     sendEmail() {
-      // Send a verification code to the email
+      //向邮件发送一份验证码
       post("/api/sendEmail?toEmail=" + this.registerForm.email);
     },
     submitLogin() {
@@ -174,24 +175,24 @@ export default {
         if (valid) {
           post("/api/login", this.loginForm).then(res => {
             if (res) {
-              // Store user token
+              //存储用户token
               const tokenStr = res.data.tokenHead + res.data.token;
               window.sessionStorage.setItem("tokenStr", tokenStr);
-              // Clear the menu
+              //清空菜单
               this.$store.commit("initRoutes", []);
-              // Redirect the page
+              // 页面跳转
               let path = this.$route.query.redirect;
               this.$router.replace(
-                  path === "/" || path === undefined
-                      ? "/index??fileType=0&filePath=%2F"
-                      : path
+                path === "/" || path === undefined
+                  ? "/index??fileType=0&filePath=%2F"
+                  : path
               );
             }
           });
         } else {
           Message({
             showClose: true,
-            message: "Warning, fields are not completely filled!",
+            message: "警告哦，字段填写未完全！",
             type: "warning"
           });
           return false;
@@ -203,16 +204,16 @@ export default {
         if (valid) {
           post("/api/register", this.registerForm).then(resp => {
             if (resp) {
-              // Clear the menu
+              //清空菜单
               this.$store.commit("initRoutes", []);
-              // Refresh the page
+              //页面刷新
               this.$router.go(0);
             }
           });
         } else {
           Message({
             showClose: true,
-            message: "Warning, fields are not completely filled!",
+            message: "警告哦，字段填写未完全！",
             type: "warning"
           });
           return false;
@@ -222,7 +223,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .body {
@@ -347,8 +347,8 @@ button {
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  //letter-spacing: 1px;
+  //text-transform: uppercase;
   transition: transform 80ms ease-in;
   cursor: pointer;
 }
@@ -432,9 +432,7 @@ button.ghost {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  //padding: 0 40px;
-  height: 100%;
-  width: 50%;
+//padding: 0 40px; height: 100%; width: 50%;
   text-align: center;
   transform: translateY(0);
   transition: transform 0.6s ease-in-out;

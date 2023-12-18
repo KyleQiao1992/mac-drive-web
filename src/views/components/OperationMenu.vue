@@ -1,6 +1,6 @@
 <template>
   <div class="operation-menu-wrapper">
-    <!-- 按钮组 -->
+    <!-- Button group -->
     <el-button-group class="operate-group">
       <el-dropdown class="create-drop" trigger="hover" v-if="fileType < 7">
         <el-button
@@ -8,13 +8,13 @@
           type="primary"
           :disabled="fileType !== 0"
           icon="el-icon-plus"
-          >新建<i class="el-icon-arrow-down el-icon--right"></i
+        >Create<i class="el-icon-arrow-down el-icon--right"></i
         ></el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item @click.native="addFolderDialog.visible = true">
             <div class="img-text-wrapper">
               <img src="../../assets/images/file/dir.png" class="imgD" />
-              新建文件夹
+              Create Folder
             </div>
           </el-dropdown-item>
           <hr color="#eee" style="width: 120px" />
@@ -23,7 +23,7 @@
               <img
                 src="../../assets/images/file/file_word.svg"
                 class="imgS"
-              />Word 文档
+              />Word Document
             </div>
           </el-dropdown-item>
           <el-dropdown-item>
@@ -31,7 +31,7 @@
               <img
                 src="../../assets/images/file/file_excel.svg"
                 class="imgS"
-              />Excel 表格
+              />Excel Spreadsheet
             </div>
           </el-dropdown-item>
           <el-dropdown-item>
@@ -39,7 +39,7 @@
               <img
                 src="../../assets/images/file/file_ppt.svg"
                 class="imgS"
-              />PPT 演示文稿
+              />PPT Presentation
             </div>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -51,7 +51,8 @@
         @click="handleUploadFileClick()"
         :disabled="fileType !== 0"
         v-if="fileType < 7"
-        >上传文件</el-button
+      >Upload File
+      </el-button
       >
 
       <el-button
@@ -60,7 +61,8 @@
         icon="el-icon-upload2"
         @click="handleEmptyTrash()"
         v-if="fileType === 8"
-        >清空回收站</el-button
+      >Empty Recycle Bin
+      </el-button
       >
       <el-button
         size="mini"
@@ -68,7 +70,8 @@
         icon="el-icon-upload2"
         @click="handleRestoreTrash()"
         v-if="fileType === 8"
-        >还原回收站</el-button
+      >Restore Recycle Bin
+      </el-button
       >
 
       <template v-if="operationFileList.length && fileType < 7">
@@ -77,24 +80,25 @@
           type="primary"
           icon="el-icon-delete"
           @click="handleDeleteFileClick()"
-          >删除</el-button
+        >Delete
+        </el-button
         >
-        <!-- disabled 当表格勾选项为空时，禁用移动按钮 | v-if 当左侧菜单选择全部时，才显示移动按钮 -->
         <el-button
           size="mini"
           type="primary"
           icon="el-icon-rank"
           :disabled="fileType !== 0"
           @click="handleMoveFileClick()"
-          >移动</el-button
+        >Move
+        </el-button
         >
-        <!-- disabled 当表格勾选项为空时，禁用下载按钮 -->
         <el-button
           size="mini"
           type="primary"
           icon="el-icon-download"
           @click="handleDownloadFileClick()"
-          >下载</el-button
+        >Download
+        </el-button
         >
       </template>
       <template v-if="operationFileList.length && fileType === 8">
@@ -103,22 +107,23 @@
           type="primary"
           icon="el-icon-delete"
           @click="handleEmptyFilesBatch()"
-          >彻底删除</el-button
+        >Permanently Delete
+        </el-button
         >
         <el-button
           size="mini"
           type="primary"
           icon="el-icon-delete"
           @click="handRestoreFilesBatch()"
-          >批量还原</el-button
+        >Batch Restore
+        </el-button
         >
       </template>
     </el-button-group>
 
-    <!-- 对话框 - 新建文件夹 -->
-    <!-- @closed 对话框关闭动画结束时 重置表单并清空所有表单校验 -->
+    <!-- Dialog - Create Folder -->
     <el-dialog
-      title="新建文件夹"
+      title="Create Folder"
       width="600px"
       :visible.sync="addFolderDialog.visible"
       @closed="$refs.addFolderForm.resetFields()"
@@ -129,17 +134,17 @@
         label-position="top"
         ref="addFolderForm"
       >
-        <el-form-item label="文件夹名称" prop="name">
+        <el-form-item label="Folder Name" prop="name">
           <el-input v-model="addFolderForm.name"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="addFolderDialog.visible = false">取 消</el-button>
+        <el-button @click="addFolderDialog.visible = false">Cancel</el-button>
         <el-button
           type="primary"
           :loading="addFolderDialog.loading"
           @click="handleAddFolderSubmit('addFolderForm')"
-          >提 交</el-button
+        >Submit</el-button
         >
       </span>
     </el-dialog>
@@ -159,17 +164,17 @@ import {
 export default {
   name: "OperationMenu",
   props: {
-    // 文件类型
+    // File type
     fileType: {
       type: Number,
       required: true
     },
-    // 文件路径
+    // File path
     filePath: {
       type: String,
       required: true
     },
-    // 表格行已选项
+    // Selected items in table rows
     operationFileList: {
       type: Array,
       required: true
@@ -177,21 +182,21 @@ export default {
   },
   data() {
     return {
-      // 新建文件夹对话框数据
+      // Create folder dialog data
       addFolderDialog: {
-        visible: false, //  对话框显隐状态
+        visible: false, // Dialog visibility status
         loading: false
       },
-      // 新建文件夹表单
+      // Create folder form
       addFolderForm: {
         name: ""
       },
-      // 新建文件夹表单校验规则
+      // Create folder form validation rules
       addFolderRules: {
         name: [
           {
             required: true,
-            message: "请输入文件夹名称",
+            message: "Please enter folder name",
             trigger: "blur, change"
           }
         ]
@@ -199,29 +204,28 @@ export default {
     };
   },
   methods: {
-    // 新建文件夹对话框 - 提交按钮
+    // Create folder dialog - Submit button
     handleAddFolderSubmit() {
       this.$refs.addFolderForm.validate(valid => {
         if (valid) {
-          this.addFolderDialog.loading = true; //  对话框的确定按钮打开loading状态
-          // 表单校验通过 - 调用新建文件夹接口
+          this.addFolderDialog.loading = true; // Enable loading state for the dialog's confirm button
+          // Form validation passed - Call the create folder interface
           makerDir({
             fileName: this.addFolderForm.name,
-            filePath: this.filePath //  文件路径
-            // IsDir: 1 //  是否为文件夹：1 表示文件夹 0 表示文件
+            filePath: this.filePath // File path
+            // IsDir: 1 // Whether it is a folder: 1 for folder, 0 for file
           }).then(
             resp => {
-              console.log(resp);
-              this.addFolderDialog.loading = false; //  对话框的确定按钮关闭loading状态
+              this.addFolderDialog.loading = false; // Disable loading state for the dialog's confirm button
               if (resp.code === 200) {
-                this.addFolderDialog.visible = false; //  关闭对话框
-                this.$emit("getTableData"); // 重新获取文件列表
+                this.addFolderDialog.visible = false; // Close the dialog
+                this.$emit("getTableData"); // Refresh file list
               } else {
                 this.$message.warning(resp.message);
               }
             },
             error => {
-              this.addFolderDialog.loading = false; //  对话框的确定按钮关闭loading状态
+              this.addFolderDialog.loading = false; // Disable loading state for the dialog's confirm button
               console.log(error);
             }
           );
@@ -230,137 +234,139 @@ export default {
         }
       });
     },
-    // 上传文件按钮 - 点击事件
+    // Upload file button - Click event
     handleUploadFileClick() {
       this.$emit("handleUploadFile", true);
     },
-    // 批量删除文件按钮
+    // Batch delete file button
     handleDeleteFileClick() {
-      // 消息弹框提示用户
       this.$confirm(
-        "此操作将删除选中文件, 但你依然可以在回收站找到它，是否继续?",
-        "提示",
+        "This operation will delete the selected files, but you can still find them in the recycle bin. Do you want to continue?",
+        "Warning",
         {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+          confirmButtonText: "Confirm",
+          cancelButtonText: "Cancel",
           type: "warning"
         }
       )
         .then(() => {
-          // 确定按钮 点击事件 调用批量删除文件接口
           batchDeleteFile({
             files: JSON.stringify(this.operationFileList),
             filePath: "/"
           }).then(res => {
             if (res.code === 200) {
-              this.$emit("getTableData"); //  刷新文件列表
+              this.$emit("getTableData"); // Refresh file list
             } else {
-              this.$message.error("失败" + res.message);
+              this.$message.error("Failed" + res.message);
             }
           });
         })
         .catch(() => {
-          //  取消
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "Deletion cancelled"
           });
         });
     },
-    // 移动文件按钮 - 点击事件
+    // Move file button - Click event
     handleMoveFileClick() {
-      // true/false 批量移动/单文件操作 | this.operationFileList 当前行文件数据
       this.$emit("handleSelectFile", true, this.operationFileList);
-      this.$emit("handleMoveFile", true); // true/false 打开/关闭移动文件对话框
+      this.$emit("handleMoveFile", true); // Open/close the move file dialog
     },
-    // 清空回收站
+    // Empty recycle bin
     handleEmptyTrash() {
-      this.$confirm("此操作将清空回收站，是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
+      this.$confirm(
+        "This operation will empty the recycle bin. Do you want to continue?",
+        "Warning",
+        {
+          confirmButtonText: "Confirm",
+          cancelButtonText: "Cancel",
+          type: "warning"
+        }
+      )
         .then(() => {
-          // 确定按钮 点击事件 调用批量删除文件接口
           getEmptyTrash({}).then(res => {
             if (res.code === 200) {
-              this.$emit("getTableData"); //  刷新文件列表
+              this.$emit("getTableData"); // Refresh file list
             } else {
-              this.$message.error("失败" + res.message);
+              this.$message.error("Failed" + res.message);
             }
           });
         })
         .catch(() => {
-          //  取消
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "Deletion cancelled"
           });
         });
     },
-    // 还原回收站
+    // Restore recycle bin
     handleRestoreTrash() {
-      this.$confirm("此操作将还原回收站，是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
+      this.$confirm(
+        "This operation will restore the recycle bin. Do you want to continue?",
+        "Warning",
+        {
+          confirmButtonText: "Confirm",
+          cancelButtonText: "Cancel",
+          type: "warning"
+        }
+      )
         .then(() => {
-          // 确定按钮 点击事件 调用批量删除文件接口
           getRestoreTrash({}).then(res => {
             if (res.code === 200) {
-              this.$emit("getTableData"); //  刷新文件列表
+              this.$emit("getTableData"); // Refresh file list
             } else {
-              this.$message.error("失败" + res.message);
+              this.$message.error("Failed" + res.message);
             }
           });
         })
         .catch(() => {
-          //  取消
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "Deletion cancelled"
           });
         });
     },
-    // 彻底删除
+    // Permanently delete
     handleEmptyFilesBatch() {
-      this.$confirm("此操作将彻底删除选中文件，是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
+      this.$confirm(
+        "This operation will permanently delete the selected files. Do you want to continue?",
+        "Warning",
+        {
+          confirmButtonText: "Confirm",
+          cancelButtonText: "Cancel",
+          type: "warning"
+        }
+      )
         .then(() => {
-          // 确定按钮 点击事件 调用批量删除文件接口
           batchEmptyFile({
             files: JSON.stringify(this.operationFileList),
             filePath: "/"
           }).then(res => {
             if (res.code === 200) {
-              this.$emit("getTableData"); //  刷新文件列表
+              this.$emit("getTableData"); // Refresh file list
             } else {
-              this.$message.error("失败" + res.message);
+              this.$message.error("Failed" + res.message);
             }
           });
         })
         .catch(() => {
-          //  取消
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "Deletion cancelled"
           });
         });
     },
-    // 批量还原
+    // Batch restore
     handRestoreFilesBatch() {
       batchRestoreFile({
         files: JSON.stringify(this.operationFileList),
         filePath: "/"
       }).then(res => {
         if (res.code === 200) {
-          this.$emit("getTableData"); //  刷新文件列表
+          this.$emit("getTableData"); // Refresh file list
         } else {
-          this.$message.error("失败" + res.message);
+          this.$message.error("Failed" + res.message);
         }
       });
     }
@@ -373,14 +379,17 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .imgD {
   margin-right: 4px;
   height: 30px;
 }
+
 .imgS {
   margin-right: 4px;
   height: 23px;
 }
+
 .create-drop {
   float: left;
 }

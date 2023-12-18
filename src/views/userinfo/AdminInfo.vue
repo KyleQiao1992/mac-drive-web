@@ -1,22 +1,22 @@
 <template>
-  <!--个人中心-->
+  <!-- Personal Center -->
   <div style="overflow:hidden;">
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <span>{{ admin.name }}</span
         ><span style="font-size: 12px;color: #808080;margin-left: 10px"
-          >({{ admin.username }})</span
-        >
+      >({{ admin.username }})</span
+      >
         <el-button
           @click="handleEdit"
           style="float: right; padding: 3px 0"
           type="text"
           icon="el-icon-edit"
-          title="编辑"
+          title="Edit"
         ></el-button>
       </div>
       <div>
-        <!--用户头像-->
+        <!-- User Avatar -->
         <div class="user_avatar">
           <el-upload
             action="/admin/upUserFace"
@@ -27,23 +27,23 @@
             <el-avatar
               :size="85"
               :src="admin.userFace"
-              title="点击修改用户头像"
+              title="Click to change user avatar"
             >
               <img :src="admin.userFace" class="user_face" />
             </el-avatar>
           </el-upload>
         </div>
 
-        <!--用户详细信息-->
+        <!-- User Detailed Information -->
         <ul class="user_info_ul">
           <li>
-            昵称：<el-tag size="small">{{ admin.name }}</el-tag>
+            Nickname: <el-tag size="small">{{ admin.name }}</el-tag>
           </li>
           <li>
-            邮箱：<el-tag size="small">{{ admin.email }}</el-tag>
+            Email: <el-tag size="small">{{ admin.email }}</el-tag>
           </li>
           <li>
-            存储大小：<el-tag size="small">{{ admin.disksize }}G</el-tag>
+            Storage Size: <el-tag size="small">{{ admin.disksize }}G</el-tag>
           </li>
         </ul>
       </div>
@@ -52,13 +52,13 @@
         type="danger"
         size="small"
         style="float: right"
-        >修改密码</el-button
+      >Change Password</el-button
       >
     </el-card>
 
-    <!--修改用户信息对话框-->
+    <!-- Edit User Information Dialog -->
     <el-dialog
-      title="编辑用户信息"
+      title="Edit User Information"
       :visible.sync="UserDialogVisible"
       width="30%"
     >
@@ -70,17 +70,17 @@
           label-width="100px"
           class="demo-ruleForm"
         >
-          <el-form-item label="账户:" prop="username">
+          <el-form-item label="Account:" prop="username">
             <el-input
               v-model="updateAdmin.username"
               size="small"
               disabled="disabled"
             ></el-input>
           </el-form-item>
-          <el-form-item label="昵称:" prop="name">
+          <el-form-item label="Nickname:" prop="name">
             <el-input v-model="updateAdmin.name" size="small"></el-input>
           </el-form-item>
-          <el-form-item label="邮箱:" prop="age">
+          <el-form-item label="Email:" prop="age">
             <el-input
               v-model="updateAdmin.email"
               size="small"
@@ -91,16 +91,16 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="UserDialogVisible = false" size="small"
-          >取 消</el-button
+        >Cancel</el-button
         >
         <el-button type="primary" @click="userDialogSubmit" size="small"
-          >确 定</el-button
+        >Confirm</el-button
         >
       </span>
     </el-dialog>
 
-    <!--修改用户密码对话框-->
-    <el-dialog title="修改密码" :visible.sync="UserPassword" width="30%">
+    <!-- Change User Password Dialog -->
+    <el-dialog title="Change Password" :visible.sync="UserPassword" width="30%">
       <div>
         <el-form
           :model="updatePassword"
@@ -109,21 +109,21 @@
           label-width="100px"
           class="demo-ruleForm"
         >
-          <el-form-item label="原密码:" prop="oldPassword" type="password">
+          <el-form-item label="Old Password:" prop="oldPassword" type="password">
             <el-input
               v-model="updatePassword.oldPassword"
               type="password"
               size="small"
             ></el-input>
           </el-form-item>
-          <el-form-item label="新密码:" prop="newPassword" type="password">
+          <el-form-item label="New Password:" prop="newPassword" type="password">
             <el-input
               v-model="updatePassword.newPassword"
               type="password"
               size="small"
             ></el-input>
           </el-form-item>
-          <el-form-item label="再次:" prop="agPassword" type="password">
+          <el-form-item label="Confirm:" prop="agPassword" type="password">
             <el-input
               size="small"
               v-model="updatePassword.agPassword"
@@ -134,9 +134,9 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="UpdatePasswordButton" size="small"
-          >确 定</el-button
+        >Confirm</el-button
         >
-        <el-button @click="UserPassword = false" size="small">取 消</el-button>
+        <el-button @click="UserPassword = false" size="small">Cancel</el-button>
       </span>
     </el-dialog>
   </div>
@@ -163,12 +163,12 @@ export default {
       UserDialogVisible: false,
       UserPassword: false,
       rules: {
-        name: [{ required: true, message: "请输入昵称", trigger: "change" }]
+        name: [{ required: true, message: "Please enter a nickname", trigger: "change" }]
       },
       rulesPassword: {
-        oldPassword: [{ required: true, message: "请输入原密码" }],
-        newPassword: [{ required: true, message: "请输入新密码" }],
-        agPassword: [{ required: true, message: "请再次密码" }]
+        oldPassword: [{ required: true, message: "Please enter the old password" }],
+        newPassword: [{ required: true, message: "Please enter a new password" }],
+        agPassword: [{ required: true, message: "Please confirm the password" }]
       }
     };
   },
@@ -176,7 +176,7 @@ export default {
     this.getAdminInfo();
   },
   methods: {
-    //初始化数据
+    // Initialize data
     getAdminInfo() {
       axios.get("/api/admin/info").then(resp => {
         if (resp) {
@@ -184,7 +184,7 @@ export default {
         }
       });
     },
-    //修改用户信息
+    // Edit user information
     handleEdit() {
       axios.get("/api/admin/info").then(resp => {
         if (resp) {
@@ -193,7 +193,7 @@ export default {
         }
       });
     },
-    //提交用户信息
+    // Submit user information
     userDialogSubmit() {
       this.$refs["ruleForm"].validate(valid => {
         if (valid) {
@@ -206,18 +206,18 @@ export default {
         }
       });
     },
-    // 修改密码窗口
+    // Change password dialog
     updatePwd() {
       this.UserPassword = true;
     },
-    //提交修改密码
+    // Submit change password
     UpdatePasswordButton() {
       axios
         .put(
           "/api/admin/upPassword?oldPassword=" +
-            this.updatePassword.oldPassword +
-            "&password=" +
-            this.updatePassword.newPassword
+          this.updatePassword.oldPassword +
+          "&password=" +
+          this.updatePassword.newPassword
         )
         .then(resp => {
           if (resp.code === 200) {
@@ -226,13 +226,14 @@ export default {
           }
         });
     },
-    //提交图片成功
+    // Submit image successfully
     onSuccess() {
       this.getAdminInfo();
     }
   }
 };
 </script>
+
 
 <style scoped>
 /*用户信息卡片*/

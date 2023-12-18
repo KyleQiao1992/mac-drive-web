@@ -1,26 +1,21 @@
 <template>
   <div class="el_header">
-    <!--头部左侧图标li-->
+    <!-- Header left side icons li -->
     <ul class="header_left_ul">
-      <li title="刷新" @click="goF5">
+      <li title="Refresh" @click="goF5">
         <i class="el-icon-refresh" />
       </li>
     </ul>
-    <!--头部右侧图标li-->
+    <!-- Header right side icons li -->
     <ul class="header_right_ul">
-      <li title="全屏">
-        <i class="el-icon-full-screen" />
-      </li>
-      <li title="小雨">
-        <i class="el-icon-heavy-rain" />
-      </li>
-      <li title="在线聊天" @click="goChat">
-        <i class="el-icon-bell" />
-      </li>
+      <!--      <li title="Online Chat" @click="goChat">-->
+      <!--        <i class="el-icon-bell" />-->
+      <!--      </li>-->
+
       <li class="throwLiStyle" style="width: 135px">
         <el-dropdown @command="handleCommand">
           <div class="el-dropdown-link">
-            <!--用户头像 src默认未加载图片路径-->
+            <!-- User avatar, src is the default not loaded image path -->
             <el-avatar
               :size="30"
               src=""
@@ -29,31 +24,29 @@
             >
               <img :src="user.userFace" />
             </el-avatar>
-            <!--用户名-->
+            <!-- Username -->
             <span>{{ user.name }}</span>
           </div>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="userInfo" icon="el-icon-s-custom"
-              >个人中心</el-dropdown-item
-            >
-            <el-dropdown-item command="setting" icon="el-icon-setting"
-              >系统设置</el-dropdown-item
+            >Personal Center</el-dropdown-item
             >
             <el-dropdown-item
               command="exit"
               icon="el-icon-switch-button"
               divided
-              >注销登录</el-dropdown-item
+            >Logout</el-dropdown-item
             >
           </el-dropdown-menu>
         </el-dropdown>
       </li>
-      <li title="更多">
+      <li title="More">
         <i class="el-icon-s-operation" />
       </li>
     </ul>
   </div>
 </template>
+
 
 <script>
 import axios from "axios";
@@ -70,53 +63,59 @@ export default {
     return {};
   },
   methods: {
-    /*用户信息下拉列表点击*/
+    /* User information dropdown list click */
     handleCommand(command) {
       switch (command) {
         case "userInfo":
           this.$router.push("/userInfo");
           break;
         case "setting":
+          // Additional functionality can be implemented here for settings
           break;
         case "exit":
-          this.$confirm("此操作将注销登录, 是否继续?", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
+          this.$confirm("This action will log you out, do you want to continue?", "Warning", {
+            confirmButtonText: "Confirm",
+            cancelButtonText: "Cancel",
             type: "warning"
           })
             .then(() => {
-              //执行注销登录
+              // Perform logout
               axios.post("/api/logout");
-              //清空sessionStorage中的数据
+              // Clear data in sessionStorage
               window.sessionStorage.clear();
-              //清空vuex中的菜单信息
+              // Clear menu information in Vuex
               this.$store.commit("initRoutes", []);
-              //跳转到登录页
+              // Redirect to login page
               this.$router.replace("/");
             })
             .catch(() => {
               this.$message({
                 type: "info",
-                message: "操作已取消"
+                message: "Operation cancelled"
               });
             });
+          break;
       }
     },
-    /*用户头像加载失败*/
+    /* User avatar load failed */
     errorHandler() {
       return true;
     },
-    //跳转至chat聊天窗口
+    // Redirect to chat window
     goChat() {
       this.$router.push("/chat");
     },
+    // Force update the component (commonly used to refresh)
     goF5() {
       this.$forceUpdate();
     }
   },
-  computed: {}
+  computed: {
+    // Additional computed properties can be added here
+  }
 };
 </script>
+
 
 <style lang="less" scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
@@ -136,7 +135,7 @@ export default {
 /*头部*/
 .el_header {
   display: flex;
-  height: 100px;
+  height: 40px;
   /*align-items: center;*/
   /*去除头部内边距多余的空格*/
   justify-content: space-between;

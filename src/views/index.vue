@@ -4,55 +4,55 @@
     <SideMenu class="home-left" :storageValue="storageValue"></SideMenu>
     <!-- Right content area -->
     <div class="home-right">
-      <UserHeader style="height: 100px" :user="user"></UserHeader>
+      <UserHeader style="height: 40px" :user="user"></UserHeader>
       <!-- Breadcrumb navigation bar -->
       <BreadCrumb :fileType="fileType" style="height: 30px"></BreadCrumb>
       <router-view />
       <div class="right-main" v-if="this.$route.path === '/index'">
         <div class="operation-wrapper">
           <OperationMenu
-              :fileType="fileType"
-              :filePath="filePath"
-              @getTableData="getFileData"
-              @handleUploadFile="handleUploadFile"
-              @handleSelectFile="setOperationFile"
-              @handleMoveFile="setMoveFileDialog"
-              :operationFileList="operationFileList"
+            :fileType="fileType"
+            :filePath="filePath"
+            @getTableData="getFileData"
+            @handleUploadFile="handleUploadFile"
+            @handleSelectFile="setOperationFile"
+            @handleMoveFile="setMoveFileDialog"
+            :operationFileList="operationFileList"
           ></OperationMenu>
           <FileUploader
-              ref="globalUploader"
-              @getTableData="getFileData"
+            ref="globalUploader"
+            @getTableData="getFileData"
           ></FileUploader>
           <!-- Viewing mode switch component, pass fileType to the child component -->
           <ShowModel :fileType="fileType"></ShowModel>
         </div>
         <!-- File table display area -->
         <FileTable
-            v-if="showModel === 0"
-            :tableData="tableData"
-            :fileType="fileType"
-            :loading="loading"
-            @getTableData="getFileData"
-            @handleSelectFile="setOperationFile"
-            @handleMoveFile="setMoveFileDialog"
+          v-if="showModel === 0"
+          :tableData="tableData"
+          :fileType="fileType"
+          :loading="loading"
+          @getTableData="getFileData"
+          @handleSelectFile="setOperationFile"
+          @handleMoveFile="setMoveFileDialog"
         ></FileTable>
         <FileGrid
-            v-if="showModel === 1"
-            :tableData="tableData"
-            :loading="loading"
+          v-if="showModel === 1"
+          :tableData="tableData"
+          :loading="loading"
         ></FileGrid>
         <!-- Pagination component -->
         <FilePagination
-            style="position:absolute; bottom:0;padding-bottom: 20px"
-            :pageData="pageData"
-            @changePageData="changePageData"
+          style="position:absolute; bottom:0;padding-bottom: 20px"
+          :pageData="pageData"
+          @changePageData="changePageData"
         ></FilePagination>
         <!-- Move file modal dialog -->
         <MoveFileDialog
-            :dialogMoveFile="dialogMoveFile"
-            @setSelectFilePath="setSelectFilePath"
-            @confirmMoveFile="confirmMoveFile"
-            @handleMoveFile="setMoveFileDialog"
+          :dialogMoveFile="dialogMoveFile"
+          @setSelectFilePath="setSelectFilePath"
+          @confirmMoveFile="confirmMoveFile"
+          @handleMoveFile="setMoveFileDialog"
         ></MoveFileDialog>
         <!-- Streaming file online viewing components -->
         <ImgReview></ImgReview>
@@ -137,8 +137,8 @@ export default {
     // File type selected in the left menu
     fileType() {
       return this.$route.query.fileType
-          ? Number(this.$route.query.fileType)
-          : 0;
+        ? Number(this.$route.query.fileType)
+        : 0;
     },
     // Viewing mode
     showModel() {
@@ -204,16 +204,16 @@ export default {
         currentPage: this.pageData.currentPage,
         pageCount: this.pageData.pageCount
       }).then(
-          res => {
-            // console.log(res);
-            this.loading = false; // Close table loading status
-            this.tableData = res.data.list; // Assign table data
-            this.pageData.total = res.data.total; // Assign total count to pagination component
-          },
-          error => {
-            this.loading = false;
-            console.log(error);
-          }
+        res => {
+          // console.log(res);
+          this.loading = false; // Close table loading status
+          this.tableData = res.data.list; // Assign table data
+          this.pageData.total = res.data.total; // Assign total count to pagination component
+        },
+        error => {
+          this.loading = false;
+          console.log(error);
+        }
       );
     },
     // Get file list by type
@@ -223,15 +223,15 @@ export default {
         currentPage: this.pageData.currentPage, // Current page number
         pageCount: this.pageData.pageCount // Number of items per page
       }).then(
-          res => {
-            this.loading = false; // Close table loading status
-            this.tableData = res.data.list; // Assign table data
-            this.pageData.total = res.data.total; // Assign total count to pagination component
-          },
-          error => {
-            this.loading = false;
-            console.log(error);
-          }
+        res => {
+          this.loading = false; // Close table loading status
+          this.tableData = res.data.list; // Assign table data
+          this.pageData.total = res.data.total; // Assign total count to pagination component
+        },
+        error => {
+          this.loading = false;
+          console.log(error);
+        }
       );
     },
     // Fuzzy search to get file list
@@ -241,15 +241,15 @@ export default {
         currentPage: this.pageData.currentPage, // Current page number
         pageCount: this.pageData.pageCount // Number of items per page
       }).then(
-          res => {
-            this.loading = false; // Close table loading status
-            this.tableData = res.data.list; // Assign table data
-            this.pageData.total = res.data.total; // Assign total count to pagination component
-          },
-          error => {
-            this.loading = false;
-            console.log(error);
-          }
+        res => {
+          this.loading = false; // Close table loading status
+          this.tableData = res.data.list; // Assign table data
+          this.pageData.total = res.data.total; // Assign total count to pagination component
+        },
+        error => {
+          this.loading = false;
+          console.log(error);
+        }
       );
     },
     // Pagination component - When page number or items per page change
@@ -358,7 +358,6 @@ export default {
       justify-content: space-between;
 
       // 左侧菜单按钮组 样式调整
-
       >>> .operation-menu-wrapper {
         flex: 1;
       }

@@ -1,19 +1,20 @@
 <template>
-  <!--  面包屑-->
+  <!-- Breadcrumb -->
   <div class="bread-crumb-wrapper">
-    <div class="current-path">当前位置：</div>
-    <!-- 按类型查看文件时 -->
+    <div class="current-path">Current Location:</div>
+    <!-- When viewing files by type -->
     <el-breadcrumb class="bread-crumb" v-if="fileType" separator="/">
       <el-breadcrumb-item>{{ fileTypeMap[fileType] }}</el-breadcrumb-item>
     </el-breadcrumb>
-    <!-- 按路径查看文件时 -->
+    <!-- When viewing files by path -->
     <el-breadcrumb class="bread-crumb" v-else separator="/">
-      <!-- 当点击面包屑导航栏中的某一级时，改变路由 -->
+      <!-- When clicking on a level in the breadcrumb navigation bar, change the route -->
       <el-breadcrumb-item
         v-for="(item, index) in breadCrumbList"
         :key="index"
-        :to="{ query: { fileType: 0, filePath: item.path } }"
-        >{{ item.name }}</el-breadcrumb-item
+        :to="{ query: { fileType: 0, filePath :  item.path } }"
+      > {{ item.name }}
+      </el-breadcrumb-item
       >
     </el-breadcrumb>
   </div>
@@ -31,23 +32,23 @@ export default {
   data() {
     return {
       fileTypeMap: {
-        1: "全部图片",
-        2: "全部文档",
-        3: "全部视频",
-        4: "全部音乐",
-        5: "压缩文件",
-        6: "其他",
-        8: "回收站",
-        9: "我的分享"
+        1: "Image",
+        2: "Documents",
+        3: "Videos",
+        4: "Music",
+        5: "Compressed",
+        6: "Others",
+        8: "Recycle Bin",
+        9: "My Shares"
       }
     };
   },
   computed: {
-    // 依据路径查看时 当前路径拆分的面包屑数据
+    // When viewing by path, the breadcrumb data split from the current path
     breadCrumbList() {
       let path = this.$route.query.filePath;
-      let pathList = path ? path.split("/").slice(1, -1) : []; // 路径列表，取第二个 ~ 倒数第二个，因为第一个和最后一个数组项都是空字符串
-      let res = [{ name: "全部文件", path: "/" }];
+      let pathList = path ? path.split("/").slice(1, -1) : []; // Path list, take the second to the second-to-last, as the first and last array items are empty strings
+      let res = [{ name: "All Files", path: "/" }];
       pathList.forEach((element, index) => {
         res.push({
           name: element,

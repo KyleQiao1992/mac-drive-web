@@ -1,20 +1,11 @@
 <template>
   <div class="change-file-model">
-    <!--    &lt;!&ndash; 批量操作 &ndash;&gt;-->
-    <!--    <i-->
-    <!--        class="batch-icon el-icon-finished"-->
-    <!--        :class="isBatchOperation ? 'active' : ''"-->
-    <!--        :title="isBatchOperation ? '取消批量操作' : '批量操作'"-->
-    <!--        v-if="currentshowModel === 1 && fileType < 7"-->
-    <!--        @click="handleBatchOperationChange()"-->
-    <!--    ></i>-->
-
-    <!-- 全局搜索文件 -->
+    <!-- Global file search -->
     <el-input
       v-if="fileType === 0"
       class="select-file-input"
       v-model="searchFile.fileName"
-      placeholder="搜索文件名"
+      placeholder="Search by file name"
       size="mini"
       maxlength="255"
       :clearable="true"
@@ -25,22 +16,22 @@
       <i
         slot="prefix"
         class="el-input__icon el-icon-search"
-        title="点击搜索"
+        title="Click to search"
         @click="handleSearchInputChange(searchFile.fileName)"
       ></i>
     </el-input>
 
     <el-divider direction="vertical" class="split-line"></el-divider>
-    <!-- 文件展示模式 -->
+    <!-- File display mode -->
     <el-radio-group v-model="currentshowModel" size="mini">
       <el-radio-button :label="0">
-        <i class="el-icon-tickets"></i> 列表
+        <i class="el-icon-tickets"></i> List
       </el-radio-button>
       <el-radio-button :label="1">
-        <i class="el-icon-s-grid"></i> 网格
+        <i class="el-icon-s-grid"></i> Grid
       </el-radio-button>
       <el-radio-button :label="2" v-if="fileType === 1">
-        <i class="el-icon-date"></i> 时间线
+        <i class="el-icon-date"></i> Timeline
       </el-radio-button>
     </el-radio-group>
   </div>
@@ -50,7 +41,7 @@
 export default {
   name: "ShowModel",
   props: {
-    // 文件类型
+    // File type
     fileType: {
       type: Number,
       required: true
@@ -58,25 +49,25 @@ export default {
   },
   data() {
     return {
-      // 文件搜索数据
+      // File search data
       searchFile: {
         fileName: ""
       }
     };
   },
   computed: {
-    //  查看模式 - 0 列表 | 1 网格 | 2 时间线
+    // View mode - 0 List | 1 Grid | 2 Timeline
     currentshowModel: {
       get() {
         return this.$store.getters.showModel;
       },
       set(val) {
-        this.$store.commit("changeShowModel", val); //  修改查看模式
+        this.$store.commit("changeShowModel", val); // Change view mode
       }
     }
   },
   methods: {
-    // 搜索输入框搜索事件
+    // Search input box search event
     handleSearchInputChange(value) {
       if (value === "") {
         this.$emit("getTableDataByType");
@@ -93,12 +84,13 @@ export default {
   margin-right: 5px;
   display: flex;
   padding: 0;
-
 }
+
 .operation-menu-wrapper.file-type-6 {
   margin: 8px 0;
   justify-content: flex-end;
 }
+
 .select-file-input {
   margin-right: 3px;
   width: 200px;
@@ -111,6 +103,7 @@ export default {
 .img-text-wrapper {
   display: flex;
   align-items: center;
+
   img {
     margin-right: 4px;
     height: 24px;

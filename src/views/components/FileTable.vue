@@ -9,7 +9,7 @@
     v-loading="loading"
     @selection-change="handleSelectRow"
   >
-    <!-- 勾选框 -->
+    <!-- Checkbox Column -->
     <el-table-column
       type="selection"
       width="50"
@@ -20,7 +20,7 @@
         <img :src="setFileImg(scope.row)" style="width: 30px" />
       </template>
     </el-table-column>
-    <el-table-column prop="fileName" label="文件名">
+    <el-table-column prop="fileName" label="File Name">
       <template slot-scope="scope">
         <div style="cursor: pointer" @click="handleFileNameClick(scope.row)">
           {{
@@ -31,110 +31,110 @@
         </div>
       </template>
     </el-table-column>
-    <el-table-column prop="extendName" label="类型" width="100">
+    <el-table-column prop="extendName" label="Type" width="100">
       <template slot-scope="scope">
         <span>
-          {{ scope.row.file_type ? scope.row.file_type : "文件夹" }}
+          {{ scope.row.file_type ? scope.row.file_type : "Folder" }}
         </span>
       </template>
     </el-table-column>
-    <el-table-column prop="file_size" label="大小" width="100">
+    <el-table-column prop="file_size" label="Size" width="100">
       <template slot-scope="scope">
         <span>
           {{ calculateFileSize(scope.row.file_size) }}
         </span>
       </template>
     </el-table-column>
-    <el-table-column prop="file_date" label="上传日期" width="180">
+    <el-table-column prop="file_date" label="Upload Date" width="180">
     </el-table-column>
     <el-table-column
       prop="file_url"
-      label="原始路径"
+      label="Original Path"
       width="180"
       v-if="fileType === 8"
     >
     </el-table-column>
     <el-table-column
       prop="file_url"
-      label="分享链接"
+      label="Share Link"
       width="250"
       v-if="fileType === 9"
     >
     </el-table-column>
     <el-table-column
       prop="file_url"
-      label="分享日期"
+      label="Share Date"
       width="180"
       v-if="fileType === 9"
     >
     </el-table-column>
     <el-table-column
       prop="file_url"
-      label="过期时间"
+      label="Expiration Date"
       width="180"
       v-if="fileType === 9"
     >
     </el-table-column>
     <el-table-column
       prop="file_del_date"
-      label="删除日期"
+      label="Deletion Date"
       width="180"
       v-if="fileType === 8"
     >
     </el-table-column>
-    <!-- 表格操作列 自定义表格头 原有的 label="操作" 需要删除 -->
+    <!-- Operation Column - Custom Table Header -->
     <el-table-column :width="operaColumnIsFold ? 200 : 100">
-      <!-- 自定义表格头 -->
+      <!-- Custom Table Header -->
       <template slot="header">
-        <span>操作</span>
+        <span>Operation</span>
         <i
           class="el-icon-circle-plus"
-          title="展开"
+          title="Expand"
           @click="operaColumnIsFold = true"
         ></i>
         <i
           class="el-icon-remove"
-          title="折叠"
+          title="Collapse"
           @click="operaColumnIsFold = false"
         ></i>
       </template>
       <template slot-scope="scope">
-        <!-- 操作列展开状态下的按钮 -->
+        <!-- Buttons when Operation Column is Expanded -->
         <div class="opera-unfold" v-if="operaColumnIsFold">
           <el-button
             type="text"
             size="small"
             v-if="fileType < 7"
             @click.native="handleClickDelete(scope.row)"
-            >删除</el-button
+          >Delete</el-button
           >
           <el-button
             type="text"
             size="small"
             v-if="fileType === 8"
             @click.native="handleClickDelete(scope.row)"
-            >还原</el-button
+          >Restore</el-button
           >
           <el-button
             type="text"
             size="small"
             v-if="fileType < 7"
             @click.native="handleClickMove(scope.row)"
-            >移动</el-button
+          >Move</el-button
           >
           <el-button
             type="text"
             v-if="fileType === 8"
             size="small"
             @click.native="handleClickDelete(scope.row)"
-            >彻底删除</el-button
+          >Permanently Delete</el-button
           >
           <el-button
             type="text"
             size="small"
             v-if="fileType < 7"
             @click.native="handleClickRename(scope.row)"
-            >重命名</el-button
+          >Rename</el-button
           >
           <el-button type="text" size="small">
             <a
@@ -142,41 +142,41 @@
               style="display: block; color: inherit; text-decoration-line: none"
               :href="getDownloadPath(scope.row)"
               v-if="fileType < 7"
-              >下载</a
+            >Download</a
             >
           </el-button>
         </div>
-        <!-- 操作列收缩状态下的按钮 -->
+        <!-- Buttons when Operation Column is Collapsed -->
         <el-dropdown trigger="click" v-else>
           <el-button size="mini">
-            操作
+            Operation
             <i class="el-icon-arrow-down el-icon--right"></i>
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
               @click.native="handleClickDelete(scope.row)"
               v-if="fileType < 7"
-              >删除</el-dropdown-item
+            >Delete</el-dropdown-item
             >
             <el-dropdown-item
               @click.native="handleClickMove(scope.row)"
               v-if="fileType < 7"
-              >移动</el-dropdown-item
+            >Move</el-dropdown-item
             >
             <el-dropdown-item
               @click.native="handleClickRename(scope.row)"
               v-if="fileType < 7"
-              >重命名</el-dropdown-item
+            >Rename</el-dropdown-item
             >
             <el-dropdown-item
               @click.native="handleClickRename(scope.row)"
               v-if="fileType === 8"
-              >文件还原</el-dropdown-item
+            >File Restore</el-dropdown-item
             >
             <el-dropdown-item
               @click.native="handleClickRename(scope.row)"
               v-if="fileType === 8"
-              >彻底删除</el-dropdown-item
+            >Permanently Delete</el-dropdown-item
             >
             <el-dropdown-item>
               <a
@@ -184,7 +184,7 @@
                 :href="getDownloadPath(scope.row)"
                 style="display: block; color: inherit; text-decoration-line: none"
                 v-if="fileType < 7"
-                >下载</a
+              >Download</a
               >
             </el-dropdown-item>
           </el-dropdown-menu>
@@ -199,17 +199,17 @@ import { deleteFile, renameFile } from "@/request/file";
 export default {
   name: "FileTable",
   props: {
-    // 表格数据
+    // Table data
     tableData: {
       type: Array,
       required: true
     },
-    // 表格加载状态
+    // Table loading status
     loading: {
       type: Boolean,
       required: true
     },
-    // 文件类型
+    // File type
     fileType: {
       type: Number,
       required: true
@@ -217,8 +217,8 @@ export default {
   },
   data() {
     return {
-      operaColumnIsFold: sessionStorage.getItem("operaColumnIsFold") || false, //  表格操作列-是否收缩
-      //  文件图片Map映射
+      operaColumnIsFold: sessionStorage.getItem("operaColumnIsFold") || false, // Table operation column - whether it's collapsed
+      // File image map
       fileImgMap: {
         csv: require("../../assets/images/file/file_csv.png"),
         doc: require("../../assets/images/file/file_word.svg"),
@@ -243,29 +243,29 @@ export default {
     };
   },
   computed: {
-    // 表格显示列
+    // Table displayed columns
     selectedColumnList() {
       return this.$store.getters.selectedColumnList;
     }
   },
   watch: {
-    // 监听收缩状态变化，存储在sessionStorage中，保证页面刷新时仍然保存设置的状态
+    // Listen to changes in the collapse status and store it in sessionStorage to maintain the setting after page refresh
     operaColumnIsFold(newValue) {
       sessionStorage.setItem("operaColumnIsFold", newValue);
     }
   },
   created() {
     this.operaColumnIsFold =
-      sessionStorage.getItem("operaColumnIsFold") === "true"; //  读取保存的状态
+      sessionStorage.getItem("operaColumnIsFold") === "true"; // Read saved status
   },
   methods: {
-    //  根据文件扩展名设置文件图片
+    // Set file image based on file extension
     setFileImg(row) {
       if (row._directory) {
-        //  文件夹
+        // Folder
         return this.fileImgMap.fold;
       } else if (["jpg", "png", "jpeg", "gif"].includes(row.file_type)) {
-        // 图片类型，直接显示缩略图
+        // Image types, show thumbnail directly
         return this.getThumbnailPath(row.id);
       } else {
         const fileTypeMap = {
@@ -275,7 +275,7 @@ export default {
           xls: "excel",
           xlsx: "excel"
         };
-        //  可以识别文件类型的文件
+        // Recognizable file types
         return (
           this.fileImgMap[row.file_type] ||
           this.fileImgMap[fileTypeMap[row.file_type]] ||
@@ -283,9 +283,9 @@ export default {
         );
       }
     },
-    // 文件名点击事件
+    // File name click event
     handleFileNameClick(row) {
-      //  若是目录则进入目录
+      // If it is a directory, then go into the directory
       if (row._directory) {
         this.$router.push({
           query: {
@@ -294,7 +294,7 @@ export default {
           }
         });
       } else if (["jpg", "png", "jpeg"].includes(row.file_type)) {
-        // 触发图片在线查看
+        // Trigger image online viewing
         let data = {
           imgReviewVisible: true,
           imgReviewList: [
@@ -309,7 +309,7 @@ export default {
         };
         this.$store.commit("setImgReviewData", data);
       } else if (["mp3", "flac", "wav"].includes(row.file_type)) {
-        // 触发音频
+        // Trigger audio
         let data = {
           audioReviewVisible: true,
           audioReviewList: [
@@ -323,7 +323,7 @@ export default {
         };
         this.$store.commit("setAudioReviewData", data);
       } else if (["mp4", "wmv"].includes(row.file_type)) {
-        // 视频
+        // Video
         let data = {
           visible: true,
           url: this.getThumbnailPath(row.id),
@@ -331,7 +331,7 @@ export default {
         };
         this.$store.commit("setVideoReviewData", data);
       } else if (["txt", "js"].includes(row.file_type)) {
-        // 文本文件
+        // Text files
         let data = {
           codeReviewVisible: true,
           fileId: row.id,
@@ -341,11 +341,11 @@ export default {
       } else if (
         ["ppt", "pptx", "doc", "docx", "xls", "xlsx"].includes(row.file_type)
       ) {
-        //office文件
+        // Office files
         window.open(this.getDownloadFile(row.id), "_blank");
       }
     },
-    //  计算文件大小
+    // Calculate file size
     calculateFileSize(size) {
       const B = 1024;
       const KB = Math.pow(1024, 2);
@@ -363,73 +363,67 @@ export default {
         return (size / GB).toFixed(3) + "TB";
       }
     },
-    // 表格行勾选事件 selection 勾选的表格行数据
+    // Table row selection event, selection is the selected table row data
     handleSelectRow(selection) {
-      this.$emit("handleSelectFile", true, selection); // true/false 批量移动/单文件操作；selection 勾选的表格行数据
+      this.$emit("handleSelectFile", true, selection); // true/false for batch move/single file operation; selection is the selected table row data
     },
-    // 删除按钮 - 点击事件
+    // Delete button - Click event
     handleClickDelete(row) {
-      // 消息弹框提示用户
       this.$confirm(
-        "此操作将删除该文件, 但你依然可以在回收站找到它，是否继续?",
-        "提示",
+        "This operation will delete the file, but you can still find it in the recycle bin. Do you want to continue?",
+        "Warning",
         {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+          confirmButtonText: "Confirm",
+          cancelButtonText: "Cancel",
           type: "warning"
         }
       )
         .then(() => {
-          // 确定按钮 点击事件 调用删除文件接口
           deleteFile(row).then(res => {
             console.log(res);
-            this.$emit("getTableData"); //  刷新文件列表
-            // this.$message.success("删除成功");
+            this.$emit("getTableData"); // Refresh file list
           });
         })
         .catch(() => {
-          //  取消
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "Deletion cancelled"
           });
         });
     },
-    // 移动按钮 - 点击事件
+    // Move button - Click event
     handleClickMove(row) {
-      this.$emit("handleSelectFile", false, row); // true/false 批量移动/单文件操作；row 当前行文件数据
-      this.$emit("handleMoveFile", true); // true/false 打开/关闭移动文件对话框
+      this.$emit("handleSelectFile", false, row); // true/false for batch move/single file operation; row is the current row file data
+      this.$emit("handleMoveFile", true); // true/false to open/close the move file dialog
     },
-    // 重命名按钮 - 点击事件
+    // Rename button - Click event
     handleClickRename(row) {
       const fileName = row.file_name;
-      this.$prompt("请输入文件名", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$prompt("Please enter a new file name", "Prompt", {
+        confirmButtonText: "Confirm",
+        cancelButtonText: "Cancel",
         inputValue: fileName,
-        inputPattern: /\S/, //  文件名不能为空
-        inputErrorMessage: "请输入文件名",
+        inputPattern: /\S/, // File name can't be empty
+        inputErrorMessage: "Please enter a file name",
         closeOnClickModal: false
       })
         .then(({ value }) => {
-          // 确定按钮 调用重命名接口
           renameFile({
             ...row,
             file_name: value
           }).then(res => {
             console.log(res);
-            this.$emit("getTableData"); //  刷新文件列表
-            // this.$message.success("文件已重命名");
+            this.$emit("getTableData"); // Refresh file list
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "取消"
+            message: "Cancelled"
           });
         });
     },
-    // 下载按钮
+    // Download button
     getDownloadPath(row) {
       return this.getDownloadFile(row.id);
     }

@@ -198,8 +198,8 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
+      this.$emit("getTableData");
       console.log("合并完成");
-      this.$emit("getTableData"); //  刷新文件列表
     },
 
     // 文件上传失败 回调函数
@@ -264,6 +264,8 @@ export default {
     handleClosePanel() {
       this.uploader.cancel(); //  取消上传文件
       this.panelShow = false;
+
+      this.$emit("getTableData");
     }
   }
 };
