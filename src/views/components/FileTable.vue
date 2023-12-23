@@ -83,7 +83,7 @@
     >
     </el-table-column>
     <!-- Operation Column - Custom Table Header -->
-    <el-table-column :width="operaColumnIsFold ? 200 : 100">
+    <el-table-column >
       <!-- Custom Table Header -->
       <template slot="header">
         <span>Operation</span>

@@ -348,6 +348,7 @@ export default {
     width: calc(100vh - 220px);
     padding-left: 20px;
     padding-right: 20px;
+    padding-bottom: 100px;
     flex: 1;
 
     .operation-wrapper {
